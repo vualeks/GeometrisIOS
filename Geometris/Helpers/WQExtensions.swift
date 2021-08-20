@@ -10,9 +10,7 @@ import Foundation
 extension Data {
     
     internal var hexString: String {
-        let pointer = self.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> UnsafePointer<UInt8> in
-            return bytes
-        }
+        let pointer = self.withUnsafeBytes { $0.load(as: UnsafePointer<UInt8>.self) }
         let array = getByteArray(pointer)
         
         return array.reduce("") { (result, byte) -> String in

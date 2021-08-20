@@ -149,8 +149,7 @@ class OBDMessage {
                 case 0:
                     if(sData.count>1)
                     {
-                        var pointer = sData.withUnsafeBytes { (bytes: UnsafePointer<CChar>) -> UnsafePointer<CChar> in
-                            return bytes }
+                        var pointer = sData.withUnsafeBytes { $0.load(as: UnsafePointer<CChar>.self) }
                         pointer = pointer.advanced(by: 1)
                         vinBuffer = String(cString: pointer)
                     }
@@ -160,9 +159,7 @@ class OBDMessage {
                 case 1:
                     if(sData.count>1 && vinBuffer.count>0)
                     {
-                        var pointer = sData.withUnsafeBytes { (bytes: UnsafePointer<CChar>) -> UnsafePointer<CChar> in
-                            return bytes
-                        }
+                        var pointer = sData.withUnsafeBytes { $0.load(as: UnsafePointer<CChar>.self) }
                         pointer = pointer.advanced(by: 1)
                         vinBuffer += String(cString: pointer)
                         
